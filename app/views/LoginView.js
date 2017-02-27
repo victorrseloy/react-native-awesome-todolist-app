@@ -3,6 +3,8 @@ import {View,Text,StyleSheet,Image} from 'react-native';
 import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 import FacebookLoginButton from '../components/FacebookLoginButton';
 import AllListsView from './AllListsView';
+import * as firebaseService from '../services/FireBaseService'
+
 
 
 export default class LoginView extends Component{
@@ -34,7 +36,14 @@ export default class LoginView extends Component{
     }
 
     _onLogin(e){
-        this.props.navigator.ref.push({view:<AllListsView navigator={{ref:undefined}}/>})
+        console.log(e);
+
+        firebaseService.authWithFacebookToken(e.credentials.token,this._loginSuccess.bind(this));
+
+    }
+
+    _loginSuccess(user){
+        this.props.navigator.ref.replace({view:<AllListsView navigator={{ref:undefined}}/>})
     }
 }
 

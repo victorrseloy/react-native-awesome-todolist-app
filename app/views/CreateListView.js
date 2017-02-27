@@ -3,11 +3,14 @@ import React,{Component} from 'react'
 import AppTemplate from '../components/AppTemplate'
 import NewListForm from '../components/NewListForm'
 
+
+
 export default class CreateListView extends AppTemplate{
 
     renderBody(){
+
         return(
-            <NewListForm/>
+            <NewListForm toastMethod={this.props.toastMethod} navigator={{ref:this.props.navigator.ref}}/>
         )
     }
 }

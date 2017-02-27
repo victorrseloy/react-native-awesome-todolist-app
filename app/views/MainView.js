@@ -17,7 +17,7 @@ export default class MainView extends Component{
         //binding back button listeners
         if (Platform.OS == 'android') {
             BackAndroid.addEventListener('hardwareBackPress', function () {
-                this.props.navigator.ref.pop();
+                this.navigator.pop();
                 return true;
             }.bind(this));
         }
@@ -25,7 +25,7 @@ export default class MainView extends Component{
 
     render(){
         return (
-            <Navigator initialRoute={{id:'LoginVIew',view:<LoginView navigator={{ref:undefined}} />}}
+             <Navigator initialRoute={{id:'LoginVIew',view:<LoginView message={{ref:null}} navigator={{ref:undefined}} />}}
                             renderScene={this.renderScene.bind(this)}
                             configureScene={() => FloatFromRight}/>
         )
@@ -42,6 +42,7 @@ export default class MainView extends Component{
      */
     renderScene(sceneProps,navigator){
         sceneProps.view.props.navigator.ref = navigator;
+        this.navigator = navigator;
         return sceneProps.view;
     }
 }

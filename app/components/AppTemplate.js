@@ -3,6 +3,7 @@ import {StyleProvider,Container,Header,Title,Body,Content,Right,Footer} from 'na
 import {TouchableHighlight,Image,StyleSheet} from 'react-native'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/commonColor';
+import Toast, {DURATION} from 'react-native-easy-toast'
 
 
 /**
@@ -30,6 +31,7 @@ export default class AppTemplate extends Component{
                     <Content style={{backgroundColor:'#FFFFFF'}}>
                         {this.renderBody()}
                     </Content>
+                    <Toast ref="toast"/>
                     <Footer style={AllListsViewNativeBaseStyle.footer}>
                         <TouchableHighlight onPress={this.createButtonClick.bind(this)}>
                             <Image style={AllListsViewStyle.plusButton}  source={(require('../../assets/images/plus_icon.png'))} />
@@ -40,6 +42,8 @@ export default class AppTemplate extends Component{
             </StyleProvider>
         )
     }
+
+
 
     /**
      * this method will render the body of the views that inherits from this class
@@ -58,6 +62,10 @@ export default class AppTemplate extends Component{
      */
     createButtonClick(e){
         throw new Error('createButtonClick() method from AppTemplate need to be override');
+    }
+
+    showToast(message){
+        this.refs.toast.show(message);
     }
 
 

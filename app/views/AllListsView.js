@@ -9,7 +9,7 @@ export default class AllListsView extends AppTemplate{
 
 
     renderBody(){
-        return <ListsListView/>
+        return <ListsListView toastMethod={this.showToast.bind(this)} navigator={{ref:this.props.navigator.ref}}/>
     }
 
     renderFooterButtons(){

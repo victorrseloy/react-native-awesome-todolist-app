@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {StyleSheet,ListView,Text,View} from 'react-native'
-import {Card,CardItem,Body,CheckBox,Spinner} from 'native-base'
+import {Spinner} from 'native-base'
 import * as FireBaseService from '../../services/FireBaseService';
 import * as ListService from '../../services/ListService';
 import ListsListItem from './ListsListItem'
@@ -30,7 +30,7 @@ export default class ListsListView extends Component{
         if(this.state.loaded){
             return  <ListView
                 dataSource={this.state.dataSource}
-                renderRow={this.renderRow}
+                renderRow={this.renderRow.bind(this)}
             />
         }
         else{
@@ -42,7 +42,7 @@ export default class ListsListView extends Component{
     }
 
     renderRow(rowData){
-        return <ListsListItem item={rowData} />
+        return <ListsListItem toastMethod={this.props.toastMethod} navigator={{ref:this.props.navigator.ref}} item={rowData} />
     }
 
     loadData(){

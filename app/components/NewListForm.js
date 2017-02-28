@@ -7,13 +7,17 @@ import * as ListService from '../services/ListService';
 
 export default class NewListForm extends Component{
 
-    constructor(){
+    constructor(args){
+        super(args);
+        let initialText = '';
 
-        super();
+        if(this.props.item){
+            initialText = this.props.item.text;
+        }
 
         this.state = {
             user:FireBaseService.getCurrentUser().uid,
-            inputText:''
+            text: initialText
         };
     }
 
@@ -21,29 +25,48 @@ export default class NewListForm extends Component{
         return (
             <Form>
                 <Item floatingLabel>
-                    <Label>List Name</Label>
-                    <Input onChangeText={(text)=> this.state.inputText = text}  />
+                    <Input placeholder="List Name"
+                           value={this.state.text}
+                           onChangeText={(text) => this.setState({text})}  />
                 </Item>
                 <Button onPress={this.addList.bind(this)} block style={{marginHorizontal:5}}>
-                    <Text>Create new list</Text>
+                    {(this.props.mode == "EDIT" &&<Text>Edit list</Text>)
+                        || <Text>Create new list</Text>}
                 </Button>
             </Form>
         )
     }
 
     addList(){
-        ListService.addList(this.state.user,this.state.inputText,function(error){
-            //TODO: check what to do if device is offline
-            if(error){
-                console.log(error);
-            }
-            else{
-                console.log("Data successfully");
-                this.props.toastMethod("List Created");
-                this.props.navigator.ref.pop();
-            }
+        if(this.props.mode == "EDIT"){
+            ListService.updateList(this.state.user,this.props.item.uid,this.state.text,function(error){
+                //TODO: check what to do if device is offline
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    console.log("Data successfully");
+                    this.props.toastMethod("List Created");
+                    this.props.navigator.ref.pop();
+                }
 
-        }.bind(this));
+            }.bind(this));
+        }
+        else{
+            ListService.addList(this.state.user,this.state.text,function(error){
+                //TODO: check what to do if device is offline
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    console.log("Data successfully");
+                    this.props.toastMethod("List edited");
+                    this.props.navigator.ref.pop();
+                }
+
+            }.bind(this));
+        }
+
     }
 
 

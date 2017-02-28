@@ -8,8 +8,9 @@ import NewListForm from '../components/NewListForm'
 export default class CreateListView extends AppTemplate{
 
     renderBody(){
+
         return(
-            <NewListForm toastMethod={this.props.toastMethod} navigator={{ref:this.props.navigator.ref}}/>
+            <NewListForm item={this.props.item} mode={this.props.mode} toastMethod={this.props.toastMethod} navigator={{ref:this.props.navigator.ref}}/>
         )
     }
 

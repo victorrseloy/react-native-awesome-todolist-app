@@ -3,6 +3,7 @@ import {Card,CardItem,Body} from 'native-base'
 import {Text,TouchableHighlight,Image,View,Alert} from 'react-native'
 import * as ListService from '../../services/ListService'
 import * as FireBaseService from '../../services/FireBaseService'
+import CreateListView from '../../views/CreateListView'
 
 
 export default class ListsListItem extends Component{
@@ -16,9 +17,12 @@ export default class ListsListItem extends Component{
                     <Text style={ListsListItemStyles.listName}>
                         {this.props.item.text}
                     </Text>
-                    <View>
+                    <View style={ListsListItemStyles.actionContainer}>
+                        <TouchableHighlight onPress={this.editItem.bind(this)}>
+                            <Image style={ListsListItemStyles.icon} source={require('../../../assets/images/ic_mode_edit.png')}/>
+                        </TouchableHighlight>
                         <TouchableHighlight onPress={this.askForConfirmationToDelete.bind(this)}>
-                            <Image style={ListsListItemStyles.deleteIcon} source={require('../../../assets/images/ic_delete_forever.png')}/>
+                            <Image style={ListsListItemStyles.icon} source={require('../../../assets/images/ic_delete_forever.png')}/>
                         </TouchableHighlight>
                     </View>
                     </Body>
@@ -45,6 +49,15 @@ export default class ListsListItem extends Component{
         ListService.deleteList(FireBaseService.getCurrentUser().uid,this.props.item.uid);
     }
 
+    editItem(){
+        this.props.navigator.ref.push({id:'CreateListView',view:<CreateListView mode="EDIT"
+                                                                                item={this.props.item}
+                                                                                toastMethod={this.props.toastMethod}
+                                                                                navigator={{ref:undefined}} />});
+    }
+
+
+
 }
 
 const ListsListItemStyles ={
@@ -52,10 +65,13 @@ const ListsListItemStyles ={
         flexDirection:'row',
         justifyContent:'space-between'
     },
+    actionContainer:{
+        flexDirection:'row',
+    },
     listName:{
         fontSize:20
     },
-    deleteIcon:{
+    icon:{
         width:35,
         height:35,
         justifyContent:'flex-end'

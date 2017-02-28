@@ -12,3 +12,7 @@ export function deleteList(user,list){
     console.log("called "+'user/'+user+'/list/'+list);
     firebase.database().ref('user/'+user+'/list/'+list).remove()
 }
+
+export function updateList(user,list,text,callback){
+    firebase.database().ref('user/'+user+'/list/'+list).set(text,callback);
+}

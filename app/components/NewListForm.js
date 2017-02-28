@@ -33,7 +33,7 @@ export default class NewListForm extends Component{
 
     addList(){
         ListService.addList(this.state.user,this.state.inputText,function(error){
-            // Callback comes here
+            //TODO: check what to do if device is offline
             if(error){
                 console.log(error);
             }

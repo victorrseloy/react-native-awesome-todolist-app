@@ -23,7 +23,7 @@ export default class AppTemplate extends Component{
                 <Container>
                     <Header style={AllListsViewNativeBaseStyle.header}>
                         <Body>
-                        <Title>My Lists</Title>
+                        <Title>{this.getTitle()}</Title>
                         </Body>
                         <Right />
                     </Header>
@@ -31,11 +31,14 @@ export default class AppTemplate extends Component{
                     <Content style={{backgroundColor:'#FFFFFF'}}>
                         {this.renderBody()}
                     </Content>
-                    <Toast ref="toast"/>
+                    <Toast ref="toast" position='center'
+                           positionValue={200}
+                           fadeInDuration={750}
+                           fadeOutDuration={1000}
+                           opacity={0.6}
+                    />
                     <Footer style={AllListsViewNativeBaseStyle.footer}>
-                        <TouchableHighlight onPress={this.createButtonClick.bind(this)}>
-                            <Image style={AllListsViewStyle.plusButton}  source={(require('../../assets/images/plus_icon.png'))} />
-                        </TouchableHighlight>
+                        {this.renderFooterButtons()}
                     </Footer>
 
                 </Container>
@@ -55,33 +58,40 @@ export default class AppTemplate extends Component{
         throw new Error('renderBody() method from AppTemplate need to be override');
     }
 
-
     /**
-     * here the action from the '+' button is handled.
-     * @param e
+     * if you want to add buttons to the app footer this can be done here
+     * @return {null}
      */
-    createButtonClick(e){
-        throw new Error('createButtonClick() method from AppTemplate need to be override');
+    renderFooterButtons(){
+        return null;
     }
 
+
+    /**
+     * this method can be used to show 'toast' messages
+     * normally you will want to pass messages from one view to another
+     * in this case this function need to be passed as parameter to the caller
+     * component
+     *
+     * @param message - the message to be show
+     */
     showToast(message){
         this.refs.toast.show(message);
     }
 
-
-    createButtonClickEnabled(){
-        return false;
+    /**
+     * The view's title will be rendered from this function
+     *
+     * @return {String} - the title
+     */
+    getTitle(){
+        throw new Error('all views that inherit from AppTemplate should override getTitle()')
     }
+
+
 }
 
-var AllListsViewStyle = StyleSheet.create({
-    plusButton:{
-        width:40,
-        height:40,
-        paddingTop:5,
-        paddingBottom:5
-    }
-});
+
 
 var AllListsViewNativeBaseStyle = {
     header:{

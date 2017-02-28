@@ -1,8 +1,9 @@
 import React,{Component} from 'react'
 import {StyleSheet,ListView,Text,View} from 'react-native'
 import {Card,CardItem,Body,CheckBox,Spinner} from 'native-base'
-import * as FireBaseService from '../services/FireBaseService';
-import * as ListService from '../services/ListService';
+import * as FireBaseService from '../../services/FireBaseService';
+import * as ListService from '../../services/ListService';
+import ListsListItem from './ListsListItem'
 
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -26,7 +27,7 @@ export default class ListsListView extends Component{
     }
 
     render(){
-        if(this.state .loaded){
+        if(this.state.loaded){
             return  <ListView
                 dataSource={this.state.dataSource}
                 renderRow={this.renderRow}
@@ -41,23 +42,14 @@ export default class ListsListView extends Component{
     }
 
     renderRow(rowData){
-        return <Card style={{marginHorizontal:5}}>
-                    <CardItem>
-                        <Body style={ListsListViewStyles.card}>
-                            <CheckBox checked={false} />
-                            <Text style={{marginLeft:20}}>
-                                {rowData}
-                            </Text>
-                        </Body>
-                    </CardItem>
-                </Card>
+        return <ListsListItem item={rowData} />
     }
 
     loadData(){
         ListService.loadLists(this.state.user,function(snapshot) {
             let list = [];
             snapshot.forEach(function(data){
-                list.push(data.A.B.toString());
+                list.push({uid:data.getKey(),text:data.A.B.toString()});
             });
             console.log(list);
             this.setState({
@@ -70,8 +62,3 @@ export default class ListsListView extends Component{
     }
 }
 
-var ListsListViewStyles ={
-    card:{
-        flexDirection:'row'
-    }
-}

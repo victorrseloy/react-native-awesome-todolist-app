@@ -15,8 +15,6 @@ function initialize() {
     isInitialized = true;
 }
 
-
-
 export function authWithFacebookToken(token,successCallBack){
     if(!isInitialized){
         initialize();

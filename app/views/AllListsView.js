@@ -1,17 +1,27 @@
 import React,{Component} from 'react';
-import ListsListView from '../components/ListsListView'
-import AppTemplate from '../components/AppTemplate'
-import CreateListView from '../views/CreateListView'
+import {TouchableHighlight,Image,StyleSheet} from 'react-native';
+import ListsListView from '../components/ListsListView/ListsListView';
+import AppTemplate from '../components/AppTemplate';
+import CreateListView from '../views/CreateListView';
 
 
 export default class AllListsView extends AppTemplate{
 
 
-
-
     renderBody(){
-
         return <ListsListView/>
+    }
+
+    renderFooterButtons(){
+        return (
+            <TouchableHighlight onPress={this.createButtonClick.bind(this)}>
+                <Image style={AllListsViewStyle.plusButton}  source={(require('../../assets/images/plus_icon.png'))} />
+            </TouchableHighlight>
+        )
+    }
+
+    getTitle(){
+        return "My Lists";
     }
 
 
@@ -20,4 +30,13 @@ export default class AllListsView extends AppTemplate{
     }
 
 }
+
+const AllListsViewStyle = StyleSheet.create({
+    plusButton:{
+        width:40,
+        height:40,
+        paddingTop:5,
+        paddingBottom:5
+    }
+});
 

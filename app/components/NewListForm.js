@@ -20,7 +20,7 @@ export default class NewListForm extends Component{
             text: initialText
         };
     }
-
+    //TODO make EDIT as a constant
     render(){
         return (
             <Form>
@@ -38,6 +38,7 @@ export default class NewListForm extends Component{
     }
 
     addList(){
+        //TODO refactor to DRY
         if(this.props.mode == "EDIT"){
             ListService.updateList(this.state.user,this.props.item.uid,this.state.text,function(error){
                 //TODO: check what to do if device is offline
@@ -59,7 +60,6 @@ export default class NewListForm extends Component{
                     console.log(error);
                 }
                 else{
-                    console.log("Data successfully");
                     this.props.toastMethod("List edited");
                     this.props.navigator.ref.pop();
                 }

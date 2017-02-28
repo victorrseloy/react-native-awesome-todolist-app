@@ -4,30 +4,37 @@ import {Text,TouchableHighlight,Image,View,Alert} from 'react-native'
 import * as ListService from '../../services/ListService'
 import * as FireBaseService from '../../services/FireBaseService'
 import CreateListView from '../../views/CreateListView'
+import TodoListView from '../../views/TodoListView'
 
 
 export default class ListsListItem extends Component{
 
-
+    //TODO check possible nativebase bug
+    //if Body is son of thouchable highligh then we get a null pointer
+    //on this.wrappedInstance
     render(){
         return (
-            <Card style={{marginHorizontal:5}}>
-                <CardItem>
-                    <Body style={ListsListItemStyles.card}>
-                    <Text style={ListsListItemStyles.listName}>
-                        {this.props.item.text}
-                    </Text>
-                    <View style={ListsListItemStyles.actionContainer}>
-                        <TouchableHighlight onPress={this.editItem.bind(this)}>
-                            <Image style={ListsListItemStyles.icon} source={require('../../../assets/images/ic_mode_edit.png')}/>
+                <Card style={{marginHorizontal:5}}>
+                    <CardItem>
+                        <TouchableHighlight style={ListsListItemStyles.card} onPress={this.goToListItems.bind(this)}>
+                           <View style={ListsListItemStyles.card}>
+                            <Body style={ListsListItemStyles.card}>
+                                <Text style={ListsListItemStyles.listName}>
+                                    {this.props.item.text}
+                                </Text>
+                                <View style={ListsListItemStyles.actionContainer}>
+                                    <TouchableHighlight onPress={this.editItem.bind(this)}>
+                                        <Image style={ListsListItemStyles.icon} source={require('../../../assets/images/ic_mode_edit.png')}/>
+                                    </TouchableHighlight>
+                                    <TouchableHighlight onPress={this.askForConfirmationToDelete.bind(this)}>
+                                        <Image style={ListsListItemStyles.icon} source={require('../../../assets/images/ic_delete_forever.png')}/>
+                                    </TouchableHighlight>
+                                </View>
+                            </Body>
+                           </View>
                         </TouchableHighlight>
-                        <TouchableHighlight onPress={this.askForConfirmationToDelete.bind(this)}>
-                            <Image style={ListsListItemStyles.icon} source={require('../../../assets/images/ic_delete_forever.png')}/>
-                        </TouchableHighlight>
-                    </View>
-                    </Body>
-                </CardItem>
-            </Card>
+                    </CardItem>
+                </Card>
         )
 
     }
@@ -53,6 +60,11 @@ export default class ListsListItem extends Component{
         this.props.navigator.ref.push({id:'CreateListView',view:<CreateListView mode="EDIT"
                                                                                 item={this.props.item}
                                                                                 toastMethod={this.props.toastMethod}
+                                                                                navigator={{ref:undefined}} />});
+    }
+
+    goToListItems(){
+        this.props.navigator.ref.push({id:'CreateListView',view:<TodoListView item={this.props.item}
                                                                                 navigator={{ref:undefined}} />});
     }
 

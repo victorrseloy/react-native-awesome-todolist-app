@@ -15,9 +15,7 @@ export default class ListsListItem extends Component{
     render(){
         return (
                 <Card style={{marginHorizontal:5}}>
-                    <CardItem>
-                        <TouchableHighlight style={ListsListItemStyles.card} onPress={this.goToListItems.bind(this)}>
-                           <View style={ListsListItemStyles.card}>
+                    <CardItem onPress={this.goToListItems.bind(this)}>
                             <Body style={ListsListItemStyles.card}>
                                 <Text style={ListsListItemStyles.listName}>
                                     {this.props.item.text}
@@ -31,8 +29,6 @@ export default class ListsListItem extends Component{
                                     </TouchableHighlight>
                                 </View>
                             </Body>
-                           </View>
-                        </TouchableHighlight>
                     </CardItem>
                 </Card>
         )

@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {StyleProvider,Container,Header,Title,Body,Content,Right,Footer} from 'native-base'
 import {TouchableHighlight,Image,StyleSheet} from 'react-native'
 import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/commonColor';
+import material from '../../native-base-theme/variables/material';
 import Toast, {DURATION} from 'react-native-easy-toast'
 
 

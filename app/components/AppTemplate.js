@@ -28,7 +28,7 @@ export default class AppTemplate extends Component{
                         <Right />
                     </Header>
 
-                    <Content style={{backgroundColor:'#FFFFFF'}}>
+                    <Content style={{backgroundColor:'#EAEAEA'}}>
                         {this.renderBody()}
                     </Content>
                     <Toast ref="toast" position='center'

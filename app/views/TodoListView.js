@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {TouchableHighlight,Image,StyleSheet} from 'react-native';
 import AppTemplate from '../components/AppTemplate';
 import TodoListViewComponent from '../components/TodoListViewComponent/TodoListViewComponent'
+import CreateTodoListItemView from './CreateTodoListItemView'
 
 
 export default class TodoListView extends AppTemplate{
@@ -13,16 +14,21 @@ export default class TodoListView extends AppTemplate{
 
     renderFooterButtons(){
         return (
-            <TouchableHighlight>
+            <TouchableHighlight onPress={this.addListButtonClick.bind(this)}>
                 <Image style={AllListsViewStyle.plusButton}  source={(require('../../assets/images/plus_icon.png'))} />
             </TouchableHighlight>
         )
     }
 
     getTitle(){
-        return "Give a propper title";
+        return this.props.item.text;
     }
 
+
+    addListButtonClick(){
+        this.props.navigator.ref.push({id:'CreateListItemView',
+            view:<CreateTodoListItemView toastMethod={this.props.toastMethod} navigator={{ref:undefined}} />});
+    }
 
 
 

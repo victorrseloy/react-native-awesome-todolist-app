@@ -53,6 +53,7 @@ export default class ListsListItem extends Component{
     }
 
     editItem(){
+        //TODO why we are using the id here?
         this.props.navigator.ref.push({id:'CreateListView',view:<CreateListView mode="EDIT"
                                                                                 item={this.props.item}
                                                                                 toastMethod={this.props.toastMethod}
@@ -60,6 +61,7 @@ export default class ListsListItem extends Component{
     }
 
     goToListItems(){
+        //TODO why we are using the id here?
         this.props.navigator.ref.push({id:'CreateListView',view:<TodoListView item={this.props.item}
                                                                                 navigator={{ref:undefined}} />});
     }
